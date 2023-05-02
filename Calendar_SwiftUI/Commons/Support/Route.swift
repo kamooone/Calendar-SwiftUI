@@ -23,9 +23,5 @@ public enum FinishType {
 
 public enum Route{
     case Splash
-    case Login
-    case Home(userId: String)
-    case Waitting(lectureId: Int, lectureNickname: String)
-    case Game(lectureId: Int)
 }
 

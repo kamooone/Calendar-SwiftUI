@@ -12,6 +12,8 @@
 		E252F1E629FD6ACA00638327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E252F1E529FD6ACA00638327 /* Assets.xcassets */; };
 		E252F1E929FD6ACA00638327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E252F1E829FD6ACA00638327 /* Preview Assets.xcassets */; };
 		E252F1F929FD715800638327 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252F1F829FD715800638327 /* Route.swift */; };
+		E28B57F62A0159B60060F2B6 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B57F52A0159B60060F2B6 /* AppSetting.swift */; };
+		E28B57FB2A0163AA0060F2B6 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B57FA2A0163AA0060F2B6 /* View+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		E252F1E529FD6ACA00638327 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E252F1E829FD6ACA00638327 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E252F1F829FD715800638327 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		E28B57F52A0159B60060F2B6 /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
+		E28B57FA2A0163AA0060F2B6 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				E252F1E129FD6AC900638327 /* Calendar_SwiftUIApp.swift */,
+				E28B57F52A0159B60060F2B6 /* AppSetting.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				E252F1F729FD712700638327 /* Support */,
+				E28B57F92A0163810060F2B6 /* Extension */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -140,6 +146,14 @@
 				E252F1F829FD715800638327 /* Route.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		E28B57F92A0163810060F2B6 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E28B57FA2A0163AA0060F2B6 /* View+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +228,8 @@
 			files = (
 				E252F1E429FD6AC900638327 /* MainView.swift in Sources */,
 				E252F1F929FD715800638327 /* Route.swift in Sources */,
+				E28B57F62A0159B60060F2B6 /* AppSetting.swift in Sources */,
+				E28B57FB2A0163AA0060F2B6 /* View+.swift in Sources */,
 				E252F1E229FD6AC900638327 /* Calendar_SwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
