@@ -9,19 +9,13 @@ import Foundation
 import SwiftUI
 
 class RouteObserver: ObservableObject{
-    @Published var path = Route.Splash
+    @Published var path = Route.Loading
         
     @Published var fromSchemeUrl = false
     @Published var schemeUrl = URL(string: "")
 }
 
-public enum FinishType {
-    case Breakout
-    case Kick
-    case Lecture
-}
-
 public enum Route{
-    case Splash
+    case Loading
 }
 

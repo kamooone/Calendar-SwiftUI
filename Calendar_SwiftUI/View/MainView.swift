@@ -13,16 +13,14 @@ struct MainView: View {
     
     var body: some View {
         ZStack{
-            if(setting.isLoading){
-                //LoadingView()
+            if setting.isLoading {
+                SplashView()
             }
-            
-            switch route.path {
-            case .Splash:
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("wo")
+            else {
+                switch route.path {
+                case .Loading:
+                    LoadingView()
+                }
             }
         }
     }
@@ -30,11 +28,11 @@ struct MainView: View {
 
 struct LoadingView: View{
     ///引数でmessageを指定した場合はそちらが優先される
-    var message = "loading"//.localized()
+    var message = "loading画面です。"//.localized()
     
     var body: some View {
         VStack{
-            //Text(message).color(.red)
+            Text(message).color(.red)
             ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
                 .frame(width: 50, height: 50)
                 .color(.white)

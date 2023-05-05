@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E210C1A02A040FE1007BB613 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210C19F2A040FE1007BB613 /* Color+.swift */; };
 		E252F1E229FD6AC900638327 /* Calendar_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252F1E129FD6AC900638327 /* Calendar_SwiftUIApp.swift */; };
 		E252F1E429FD6AC900638327 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252F1E329FD6AC900638327 /* MainView.swift */; };
 		E252F1E629FD6ACA00638327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E252F1E529FD6ACA00638327 /* Assets.xcassets */; };
@@ -14,9 +15,11 @@
 		E252F1F929FD715800638327 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252F1F829FD715800638327 /* Route.swift */; };
 		E28B57F62A0159B60060F2B6 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B57F52A0159B60060F2B6 /* AppSetting.swift */; };
 		E28B57FB2A0163AA0060F2B6 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B57FA2A0163AA0060F2B6 /* View+.swift */; };
+		E28B58012A0177860060F2B6 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28B58002A0177860060F2B6 /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E210C19F2A040FE1007BB613 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		E252F1DE29FD6AC900638327 /* Calendar_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E252F1E129FD6AC900638327 /* Calendar_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar_SwiftUIApp.swift; sourceTree = "<group>"; };
 		E252F1E329FD6AC900638327 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -25,6 +28,7 @@
 		E252F1F829FD715800638327 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		E28B57F52A0159B60060F2B6 /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
 		E28B57FA2A0163AA0060F2B6 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		E28B58002A0177860060F2B6 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				E252F1E329FD6AC900638327 /* MainView.swift */,
+				E28B57FF2A01776B0060F2B6 /* SplashView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -152,8 +157,17 @@
 			isa = PBXGroup;
 			children = (
 				E28B57FA2A0163AA0060F2B6 /* View+.swift */,
+				E210C19F2A040FE1007BB613 /* Color+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		E28B57FF2A01776B0060F2B6 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				E28B58002A0177860060F2B6 /* SplashView.swift */,
+			);
+			path = SplashView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,11 +240,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E210C1A02A040FE1007BB613 /* Color+.swift in Sources */,
 				E252F1E429FD6AC900638327 /* MainView.swift in Sources */,
 				E252F1F929FD715800638327 /* Route.swift in Sources */,
 				E28B57F62A0159B60060F2B6 /* AppSetting.swift in Sources */,
 				E28B57FB2A0163AA0060F2B6 /* View+.swift in Sources */,
 				E252F1E229FD6AC900638327 /* Calendar_SwiftUIApp.swift in Sources */,
+				E28B58012A0177860060F2B6 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
