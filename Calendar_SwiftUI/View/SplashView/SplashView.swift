@@ -11,7 +11,7 @@ struct SplashView: View {
     @EnvironmentObject var route: RouteObserver
     @EnvironmentObject var setting: Setting
     let splashTime: TimeInterval = 3.0
-        
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -26,8 +26,9 @@ struct SplashView: View {
         .onAppear {
             // 一定時間後にスプラッシュ画面からホーム画面に遷移するための処理
             DispatchQueue.main.asyncAfter(deadline: .now() + splashTime) {
-                    setting.isLoading = false
-                    route.path = .Loading
+                setting.isLoading = false
+                //route.path = .Loading
+                route.path = .Calendar
             }
         }
     }

@@ -20,6 +20,8 @@ struct MainView: View {
                 switch route.path {
                 case .Loading:
                     LoadingView()
+                case .Calendar:
+                    CalendarView()
                 }
             }
         }
