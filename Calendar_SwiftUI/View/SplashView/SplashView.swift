@@ -10,7 +10,7 @@ import SwiftUI
 struct SplashView: View {
     @EnvironmentObject var route: RouteObserver
     @EnvironmentObject var setting: Setting
-    let splashTime: TimeInterval = 3.0
+    let splashTime: TimeInterval = 1.0
     
     var body: some View {
         VStack {

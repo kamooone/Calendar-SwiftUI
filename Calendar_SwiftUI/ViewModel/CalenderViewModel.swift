@@ -19,7 +19,7 @@ enum Weekday: Int, Comparable {
 
 final class CalendarViewModel: ObservableObject {
     //Action trigger for request API
-    let trigger = CalendarViewModelVT()
+    static let shared = CalendarViewModel()
     
     // 年のみを取得
     let year : Int = Calendar.current.component(.year, from: Date())

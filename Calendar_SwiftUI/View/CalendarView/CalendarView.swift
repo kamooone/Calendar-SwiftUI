@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     
-    @StateObject var calendarViewModel = CalendarViewModel()
+    let calendarViewModel = CalendarViewModel.shared
     
     let dayofweek = ["日", "月", "火", "水", "木", "金", "土"]
     let cornerRadius: CGFloat = 5
@@ -18,23 +18,49 @@ struct CalendarView: View {
     
     @State var firstDayWeek: Weekday = Weekday.monday
     @State var numDaysMonth: Int = 0
+    @State var currentMonth: Int = 0
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Text("\(String(calendarViewModel.year))年\(calendarViewModel.month)月\(calendarViewModel.day)日")
+                HStack() {
+                    
+                    Button(action: {
+                        // ToDo 月が1未満になったら12月になるようにして、年数を一つ下げる
+                        currentMonth -= 1
+                        bindViewModel()
+                    }){
+                        Text("◀︎")
+                            .font(.system(size: 20))
+                    }
+                    .offset(x: 0, y: 60)
+                    Text("\(String(calendarViewModel.year))年\(calendarViewModel.month + currentMonth)月")
                         .font(.system(size: 20))
+                        .offset(x: 0, y: 60)
+                    
+                    Button(action: {
+                        // ToDo 月が12以上になったら1月になるようにして、年数を一つ上げる
+                        currentMonth += 1
+                        bindViewModel()
+                    }){
+                        Text("▶︎")
+                            .font(.system(size: 20))
+                    }
+                    .offset(x: 0, y: 60)
+                }
                 HStack() {
                     ForEach(self.dayofweek, id: \.self) { day in
                         ZStack {
                             RoundedRectangle(cornerRadius: cornerRadius)
                                 .frame(width: geometry.size.width / columns, height: geometry.size.height / rows)
                                 .foregroundColor(Color.clear) // 今のところは表示の必要がないため透明にする
+                                .offset(x: 0, y: 30)
                             HStack {
                                 Spacer().frame(width: 20)
                                 Text(day)
                                     .font(.system(size: 16))
                                     .foregroundColor(day == "土" ? Color.blue : (day == "日" ? Color.red : Color.black))
+                                    .offset(x: 0, y: 30)
                                 Spacer().frame(width: 20)
                             }
                         }
@@ -100,8 +126,8 @@ struct CalendarView: View {
 
 extension CalendarView {
     func bindViewModel() {
-        firstDayWeek = calendarViewModel.dayOfWeekCalc(year: calendarViewModel.year, month: calendarViewModel.month, day: 1)
+        firstDayWeek = calendarViewModel.dayOfWeekCalc(year: calendarViewModel.year, month: calendarViewModel.month + currentMonth,  day: 1)
         
-        numDaysMonth = calendarViewModel.dayNumber(year: calendarViewModel.year, month: calendarViewModel.month)
+        numDaysMonth = calendarViewModel.dayNumber(year: calendarViewModel.year, month: calendarViewModel.month + currentMonth)
     }
 }
