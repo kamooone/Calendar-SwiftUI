@@ -7,55 +7,100 @@
 
 import SwiftUI
 
-struct CalendarViewModel: UIViewRepresentable {
-    ///クロージャーを保持するために使用されます。このクロージャーは、カレンダービューで日付が選択されたときに、選択された日付の DateComponents を引数として呼び出されます。つまり、このクロージャーは、日付が選択された際に実行する処理を指定するために使用されます。
-    let didSelectDate: (_ dateComponents: DateComponents) -> Void
-    
-    final public class Coordinator: NSObject, UICalendarSelectionSingleDateDelegate {
-        
-        ///didSelectDateというクロージャを定義しています。このクロージャは、引数として dateComponents を受け取り、戻り値はありません。このクロージャは、Coordinator のインスタンスが初期化されるときに渡され、後でカレンダービューで日付が選択されたときに、選択された日付の dateComponents を引数として呼び出されます。つまり、このクロージャは、日付が選択されたときに呼び出されるコールバック関数のようなものです。
-        let didSelectDate: (_ dateComponents: DateComponents) -> Void
-        
-        ///このクロージャーは、日付が選択された際に実行される処理を指定するために用意されています。引数の didSelectDate には、渡されたクロージャーが代入されます。Coordinator クラスのインスタンスが生成された際に、このクロージャーが指定された日付が選択された場合に呼び出されるようになります。
-        init(
-            didSelectDate: @escaping (_ dateComponents: DateComponents) -> Void
-        ) {
-            self.didSelectDate = didSelectDate
-        }
-        
-        ///UICalendarSelectionSingleDateDelegateプロトコルに定義されているメソッドです。このメソッドは、UICalendarSelectionSingleDateオブジェクト内で日付が選択された場合に呼び出されます。このメソッドは、選択された日付を表すDateComponentsオブジェクトを引数に受け取り、その日付を処理するために使用できます。
-        public func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-            guard let dateComponents = dateComponents else {
-                return
-            }
-            didSelectDate(dateComponents)
-        }
-    }
-    
-    ///UIViewRepresentable プロトコルを実装するカスタムビューのインスタンスが作成されたときに呼び出されます。このメソッドは、このカスタムビューのコントローラオブジェクトを作成するために使用されます。返されたオブジェクトは、カスタムビューのライフサイクルを管理するために使用されます。具体的には、UIKitオブジェクトとSwiftUIオブジェクトの間の通信を処理するのに使用されます。このような通信は、Coordinatorを使用して行われます。例えば、カスタムビューのインスタンスがUIKitのスクロールビューのサブビューとして使用される場合、Coordinatorは、スクロールビューのスクロール位置をカスタムビューに伝えるために使用されます。
-    public func makeCoordinator() -> Coordinator {
-        Coordinator(didSelectDate: didSelectDate)
-    }
-    
-    ///表示するViewの初期状態のインスタンスを生成するメソッドです。SwiftUIの中で使用したいUIKitのViewを戻り値として返却します。このメソッドは最初の一回しか呼び出されず、ビューを更新する場合はupdateUIViewメソッドに処理を定義します。
-    func makeUIView(context: Context) -> some UIView {
-        let selection = UICalendarSelectionSingleDate(delegate: context.coordinator)
-        
-        let calendarView = UICalendarView()
-        calendarView.selectionBehavior = selection
-        return calendarView
-    }
-    
-    ///表示するビューの状態が更新されるたびに呼び出され更新を反映させるためのメソッドです。例えばUIViewRepresentableプロトコルに準拠させた構造体のプロパティなどが変更された時などに呼び出されます。
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
+// 曜日を表すenumにComparableプロトコルを準拠させることで、<演算子をオーバーロードし、曜日の比較を可能にする
+enum Weekday: Int, Comparable {
+    case monday = 0, tuesday, wednesday, thursday, friday, saturday, sunday
+
+    static func < (lhs: Weekday, rhs: Weekday) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
 
-struct CalendarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarViewModel { dateComponents in
-            
+
+final class CalendarViewModel: ObservableObject {
+    //Action trigger for request API
+    let trigger = CalendarViewModelVT()
+    
+    // 年のみを取得
+    let year : Int = Calendar.current.component(.year, from: Date())
+    // 月のみを取得
+    let month : Int = Calendar.current.component(.month, from: Date())
+    // 日のみを取得
+    let day : Int = Calendar.current.component(.day, from: Date())
+    
+    // 閏年の判定
+    func leapYear(year:Int) -> Bool {
+        return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)
+    }
+
+    // 年月日から曜日を判定(ツェラーの公式より)
+    func dayOfWeekCalc(year: Int, month: Int, day: Int) -> Weekday {
+        var result: Weekday = .monday
+        
+        var changeYear = year
+        var changeMonth = month
+        
+        // monthが1月と2月の場合のみそれぞれに12を加え，前年の年として計算
+        if month <= 2 {
+            changeYear -= 1
+            changeMonth += 12
+        }
+        
+        let firstTerm = (26 * (changeMonth + 1)) / 10
+        let secondTerm = changeYear / 4
+        let thirdTerm = 5 * (changeYear / 100)
+        let fourthTerm = (changeYear / 100) / 4
+        
+        result = Weekday(rawValue: (day + firstTerm + changeYear + secondTerm + thirdTerm + fourthTerm + 5) % 7)!
+        
+        return result
+    }
+    
+    // 日数を取得する
+    func dayNumber(year: Int, month: Int) -> Int {
+        switch month {
+        case 1, 3, 5, 7, 8, 10, 12:
+            return 31
+        case 4, 6, 9, 11:
+            return 30
+        case 2:
+            return leapYear(year: year) ? 29 : 28
+        default:
+            return 0
         }
     }
+    
+    
+    //=========================================
+    // 使用しないためコメントアウト
+    //=========================================
+    // 週数を取得する
+//    func getWeekNumber(year: Int, month: Int) -> Int {
+//        if caseFourWeek(year: year, month: month) {
+//            return 4
+//        } else if caseSixWeek(year: year, month: month) {
+//            return 6
+//        } else {
+//            return 5
+//        }
+//    }
+//
+//    // 週数が4の場合
+//    private func caseFourWeek(year: Int, month: Int) -> Bool {
+//        let firstDayOfWeek = dayOfWeekCalc(year: year, month: month, day: 1)
+//        return !leapYear(year: year) && month == 2 && firstDayOfWeek == .sunday
+//    }
+//
+//    // 週数が6の場合
+//    private func caseSixWeek(year: Int, month: Int) -> Bool {
+//        let firstDayOfWeek = dayOfWeekCalc(year: year, month: month, day: 1)
+//        let days = dayNumber(year: year, month: month)
+//        return (firstDayOfWeek == .saturday && days == 30) || (firstDayOfWeek >= .friday && days == 31)
+//    }
+}
+
+
+struct CalendarViewModelVT {
+    
+
 }
